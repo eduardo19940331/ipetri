@@ -11,6 +11,14 @@
 |
 */
 
+Route::get('/login', 'LoginController@login')->name('login');
+Route::get('/logout', 'LoginController@logout')->name('logout');
 Route::get('/', function () {
-    return view('welcome');
+    return redirect('/admin/');
+});
+
+Auth::routes();
+
+Route::prefix('admin')->middleware('auth')->group(function () {
+    Route::get('/', 'HomeController@index')->name('home');
 });

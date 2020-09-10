@@ -58,7 +58,7 @@ class LoginController extends Controller
         ];
 
         if (Auth::attempt($credentials)) {
-            return redirect()->intended('/admin/');
+            return redirect()->intended('/panel/');
         } else {
             return redirect()->intended('/login');
         }

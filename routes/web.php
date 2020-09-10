@@ -14,11 +14,14 @@
 Route::get('/login', 'LoginController@login')->name('login');
 Route::get('/logout', 'LoginController@logout')->name('logout');
 Route::get('/', function () {
-    return redirect('/admin/');
+    return redirect('/panel/');
 });
 
 Auth::routes();
 
-Route::prefix('admin')->middleware('auth')->group(function () {
+Route::prefix('panel')->group(function () {// ->middleware('auth')
     Route::get('/', 'HomeController@index')->name('home');
+    Route::get('/user-admin', 'UserActions\UserController@index')->name('adminUser');
+    Route::post('/user-admin/data', 'UserActions\UserController@getUsersData')->name('adminUserData');
+    Route::get('/user-admin/created/{id?}', 'UserActions\UserController@getUserCreated')->name('adminUserCreated');
 });

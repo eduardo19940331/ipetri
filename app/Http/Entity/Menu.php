@@ -4,24 +4,24 @@ namespace App\Http\Entity;
 
 use Illuminate\Database\Eloquent\Model;
 
-class User extends Model
+class Menu extends Model
 {
     /**
      *
      * @var string
      */
-    protected $table = 'users';
+    protected $table = 'menus';
     protected $primaryKey = 'id';
     public $incrementing = true;
     public $timestamps = true;
     const CREATED_AT = 'created_at';
     const UPDATED_AT = 'updated_at';
-    protected $casts = [
-        'fullname' => '',
-    ];
 
-    public function FullName()
+    /**
+     * Get all of the posts that are assigned this tag.
+     */
+    public function menus_by_users()
     {
-        return "{$this->name} {$this->surname}";
+        return $this->hasMany(MenuByUser::class);
     }
 }

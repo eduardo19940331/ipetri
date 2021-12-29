@@ -1,21 +1,19 @@
 <?php
 
-namespace App\Http\Controllers\UserActions;
+namespace App\Http\Controllers\EFCActions;
 
+use DateTime;
 use App\Helper\HelperDate;
 use App\Http\Entity\User;
-use DateTime;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller as BaseController;
-use Illuminate\Support\Facades\Crypt;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
-class UserController extends BaseController
+class EFCController extends BaseController
 {
     public function index()
     {
-        return view('admin.user.index');
+        return view('christianTraining.index');
     }
 
     public function getUsersData()
@@ -24,9 +22,8 @@ class UserController extends BaseController
         $users = User::where('status', '=', 1)->whereNull('deleted_at')->get();
         $data = [];
         foreach ($users as $user) {
-            $ident = Crypt::encryptString($user->id);
             $data[] = [
-                "id" => $ident,
+                "id" => $user->id,
                 "rut" => $user->rut,
                 "name" => $user->first_name . " " . $user->last_name,
                 "phone" => $user->phone,
@@ -37,9 +34,8 @@ class UserController extends BaseController
         return json_encode(['data' => $data]);
     }
 
-    public function getUserCreated(string $id = "")
+    public function getSeccionCreated(int $id = 0)
     {
-        $id !== "" ? $id = Crypt::decryptString($id) : 0;
         $user = User::find($id);
 
         if ($user) {
@@ -66,7 +62,6 @@ class UserController extends BaseController
             "first_name" => "required",
             "last_name" => "required",
             "sex" => "required",
-            "username" => "required",
             "email" => "required",
             "phone" => "required"
         ];
@@ -76,7 +71,6 @@ class UserController extends BaseController
             "first_name.required" => "Campo :attribute debe ser ingresado",
             "last_name.required" => "Campo :attribute debe ser ingresado",
             "sex.required" => "Campo :attribute debe ser ingresado",
-            "username.required" => "Campo :attribute debe ser ingresado",
             "email.required" => "Campo :attribute debe ser ingresado",
             "phone.required" => "Campo :attribute debe ser ingresado"
         ];
@@ -100,9 +94,6 @@ class UserController extends BaseController
         $user->email = $data["email"];
         $user->arrivaldate = $helperDate->reverseDate($data["arrival_date"]);
         $user->birthday = $helperDate->reverseDate($data["birthdate"]);
-        $user->username = $data['username'];
-        $user->password = Hash::make($data['password'] ?? '123456789');
-        $user->status = 1;
         $user->save();
 
         return json_encode([
@@ -111,19 +102,10 @@ class UserController extends BaseController
         ], JSON_NUMERIC_CHECK);
     }
 
-    public function removeUser(Request $request)
+    public function removeUser(Request $request): json_encode
     {
-        $id = Crypt::decryptString($request->get('id'));
-        $user = User::find($id);
+        $user = User::find($request->get('id'));
 
-        if (!$user) {
-            return json_encode([
-                "state" => "error",
-                "message" => "El Usuario no ha sido encontrado en el sistema"
-            ]);
-        }
-        $user->status = 0;
-        $user->save();
 
         return json_encode([
             "state" => "success",

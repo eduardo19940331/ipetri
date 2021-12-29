@@ -4,24 +4,21 @@ namespace App\Http\Entity;
 
 use Illuminate\Database\Eloquent\Model;
 
-class User extends Model
+class MenuByUser extends Model
 {
     /**
      *
      * @var string
      */
-    protected $table = 'users';
+    protected $table = 'menus_by_users';
     protected $primaryKey = 'id';
     public $incrementing = true;
     public $timestamps = true;
     const CREATED_AT = 'created_at';
     const UPDATED_AT = 'updated_at';
-    protected $casts = [
-        'fullname' => '',
-    ];
 
-    public function FullName()
+    public function menu()
     {
-        return "{$this->name} {$this->surname}";
+        return $this->hasMany(Menu::class, 'id');
     }
 }

@@ -59,10 +59,7 @@ class User extends Authenticatable
                 ];
             }
         }
-        // echo '<pre>';
-        // var_dump($menu);
-        // echo '</pre>';
-        // die();
+
         return $menu;
     }
 }

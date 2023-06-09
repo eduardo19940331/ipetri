@@ -34,10 +34,9 @@ class EFCController extends BaseController
         return json_encode(['data' => $data]);
     }
 
-    public function getSeccionCreated(int $id = 0)
+    public function getSchoolCreated(int $id = 0)
     {
         $user = User::find($id);
-
         if ($user) {
             $dateBirth = new DateTime($user->birthday);
             $dateArrival = new DateTime($user->arrivaldate);
@@ -45,7 +44,7 @@ class EFCController extends BaseController
             $user->arrivalDateFormat = $dateArrival->format("d/m/Y");
         }
 
-        return view('admin.user.new', [
+        return view('christianTraining.parcial.new', [
             "usr" => $user
         ]);
     }
@@ -105,7 +104,6 @@ class EFCController extends BaseController
     public function removeUser(Request $request): json_encode
     {
         $user = User::find($request->get('id'));
-
 
         return json_encode([
             "state" => "success",

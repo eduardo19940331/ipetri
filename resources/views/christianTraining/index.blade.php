@@ -13,7 +13,7 @@
     <div class="card-header bg-primary">
         Cursos Dictados
         <div class="pull-right">
-            <a href="{{ route('adminUserCreated') }}" type="button" class="btn btn-sm btn-primary"><i class="fa fa-book"></i> Nuevo Curso</a>
+            <a href="{{ route('christianTrainingSchoolCreated') }}" type="button" class="btn btn-sm btn-primary"><i class="fa fa-book"></i> Nuevo Curso</a>
             <a href="{{ route('adminUserCreated') }}" type="button" class="btn btn-sm btn-primary"><i class="fa fa-user"></i> Alumnos</a>
         </div>
     </div>

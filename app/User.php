@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Http\Entity\Menu;
 use App\Http\Entity\MenuByUser;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -43,8 +44,14 @@ class User extends Authenticatable
     public function getMenu(): array
     {
         $user = $this->id;
-        $menuData = MenuByUser::where('menus_by_users.user_id', $user)->where('menus_by_users.status', 1)->where('menus_by_users.deleted_at', null)
-            ->join('menus', 'menus_by_users.menu_id', '=', 'menus.id')->orderBy('menus.parent_id')->get();
+        $menuData = MenuByUser::join(Menu::table(), MenuByUser::col('menu_id'), Menu::col('id'))
+        ->where(MenuByUser::col('user_id'), $user)
+        ->where(MenuByUser::col('status'), 1)
+        ->where(MenuByUser::col('deleted_at'), null)
+        ->orderBy(Menu::col('parent_id'))
+        ->orderBy(Menu::col('name_menu'))
+        ->get();
+        
         $menu = [];
         foreach ($menuData as $item) {
             if ($item->parent_id == null) {
@@ -59,7 +66,7 @@ class User extends Authenticatable
                 ];
             }
         }
-
+        
         return $menu;
     }
 }

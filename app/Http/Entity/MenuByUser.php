@@ -2,20 +2,24 @@
 
 namespace App\Http\Entity;
 
-use Illuminate\Database\Eloquent\Model;
 
-class MenuByUser extends Model
+class MenuByUser extends BaseModel
 {
     /**
-     *
      * @var string
      */
     protected $table = 'menus_by_users';
+
     protected $primaryKey = 'id';
+
     public $incrementing = true;
+
     public $timestamps = true;
+
     const CREATED_AT = 'created_at';
     const UPDATED_AT = 'updated_at';
+
+    protected $fillable = ['id', 'menu_id', 'user_id', 'status'];
 
     public function menu()
     {

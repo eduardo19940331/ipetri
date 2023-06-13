@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Entity\Menu;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -13,19 +14,16 @@ class CreateMenuTable extends Migration
      */
     public function up()
     {
-        Schema::create('menu', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->integer('parent_id');
-            $table->integer('menu_id')->unsigned();
+        Schema::create(Menu::table(), function (Blueprint $table) {
+            $table->integerIncrements('id');
+            $table->integer('parent_id')->nullable();
             $table->string('name_menu');
-            $table->integer('status');
-            $table->dateTime('deleted_at');
+            $table->string('icon');
+            $table->string('url')->nullable();
+            $table->integer('status')->default(1);
+            $table->softDeletes();
             $table->timestamps();
         });
-
-        // Schema::table('menu', function (Blueprint $table) {
-        //     $table->foreign('menu_id')->references('id')->on('menu_by_user');
-        // });
     }
 
     /**

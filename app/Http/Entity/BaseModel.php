@@ -26,7 +26,7 @@ abstract class BaseModel extends Model
         } else {
             return self::$tableName[$className];
         }
-    }
+      }
 
     /**
      * @param string $column

@@ -31,6 +31,7 @@ class Menu extends BaseModel
         'id',
         'name_menu',
         'icon',
+        'url',
         'parent_id'
     ];
 

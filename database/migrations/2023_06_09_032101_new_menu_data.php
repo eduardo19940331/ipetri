@@ -23,7 +23,7 @@ class NewMenuData extends Migration
         $menu = new Menu([
             'id' => Menu::ADMIN_USERS,
             'name_menu' => "Usuarios",
-            'url' => "adminUserData",
+            'url' => "adminUser",
             'icon' => "fa fa-users",
             'parent_id' => Menu::ADMINISTRACION
         ]);

@@ -95,7 +95,7 @@ class UserController extends BaseController
         $user->rut = $data["run"];
         $user->last_name = $data["last_name"];
         $user->first_name = $data["first_name"];
-        $user->sex = $data["sex"];
+        $user->gender = $data["sex"];
         $user->phone = $data["phone"];
         $user->email = $data["email"];
         $user->arrivaldate = $helperDate->reverseDate($data["arrival_date"]);

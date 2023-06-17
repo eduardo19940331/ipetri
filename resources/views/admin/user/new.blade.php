@@ -39,8 +39,8 @@
                     <label for="sex">Sexo</label>
                     <select id="sex" name="sex" class="form-control">
                         <option selected value="">-- Seleccione --</option>
-                        <option value="1" {{ ($usr->sex ?? 0) == 1 ? 'selected="selected"' : '' }}>Femenino</option>
-                        <option value="2" {{ ($usr->sex ?? 0) == 2 ? 'selected="selected"' : '' }}>Masculino</option>
+                        <option value="0" {{ ($usr->gender ?? 2) == 0 ? 'selected="selected"' : '' }}>Femenino</option>
+                        <option value="1" {{ ($usr->gender ?? 2) == 1 ? 'selected="selected"' : '' }}>Masculino</option>
                     </select>
                 </div>
                 <div class="form-group col-md-4">
@@ -89,7 +89,7 @@
             on_success: function() {
                 $("#run").css("border-color", "");
             },
-            format_on: 'keyup'
+            format_on: 'keyup'  
         });
     });
 
@@ -204,7 +204,7 @@
             showChargePageLoad(true);
             var dataForm = $(form).serializeArray();
             $.ajax({
-                url: '/panel/user-admin/save',
+                url: '/admin/user-admin/save',
                 data: {
                     data: dataForm
                 },
